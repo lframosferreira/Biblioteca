@@ -6,14 +6,6 @@
 //
 // O(VE + V²logV)
 
-// Stoer Wagner
-// https://dl.acm.org/doi/pdf/10.1145/263867.263872
-// 
-// encontra corte minimo em grafo conexo nao direcionado com pesos
-// positivos
-//
-// O(VE + V²logV)
-
 
 #include <bits/stdc++.h>
 
@@ -109,3 +101,29 @@ int stoer_wagner(){
     return mincut_val;
 }
 
+stack<tuple<int, int, int>> edges;
+
+int main(){ _
+    int t; cin >> t;
+    while (t--){
+        g.clear();
+        cin >> n >> m;
+        g.resize(n+1); 
+        size_V=n;
+        for (int i = 0; i < m; i++){
+            int u, v, c; cin >> u >> v >> c;
+            edges.push({u,v,c});
+        }
+        set<ii> foi;
+        while (!edges.empty()){
+            auto [u, v, c] = edges.top();edges.pop();
+            if (foi.find({u, v}) != foi.end()) continue;
+            foi.insert({u, v});
+            foi.insert({v, u});
+            g[u].pb({c, v});
+            g[v].pb({c, u});
+        }
+        cout << stoer_wagner() << endl;
+    }
+    exit(0);
+}
